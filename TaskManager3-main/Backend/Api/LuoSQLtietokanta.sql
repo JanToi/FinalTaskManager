@@ -1,0 +1,98 @@
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'TaskManager')
+BEGIN
+	CREATE DATABASE TaskManager
+
+END
+GO
+USE [TaskManager]
+GO
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'Status')
+BEGIN
+	CREATE TABLE [dbo].[Status](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Name] [nvarchar](50) NOT NULL,
+		[Theme] [nvarchar](50) NOT NULL,
+	 CONSTRAINT [PK_Status] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'ActivityType')
+BEGIN
+
+	CREATE TABLE [dbo].[ActivityType](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Name] [nvarchar](50) NOT NULL,
+	 CONSTRAINT [PK_ActivityType] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	) ON [PRIMARY]
+END
+GO
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'Task')
+BEGIN
+
+	CREATE TABLE [dbo].[Task](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Name] [nvarchar](50) NOT NULL,
+		[Description] [nvarchar](50) NULL,
+		[StartDate] [datetime] NOT NULL,
+		[EndDate] [datetime] NOT NULL,
+		[StatusId] [int] NOT NULL,
+		[ActivityTypeId] [int] NOT NULL,
+		[DoneDate] [datetime] NULL,
+	 CONSTRAINT [PK_Task] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[Task]  WITH CHECK ADD  CONSTRAINT [FK_Task_ActivityType] FOREIGN KEY([ActivityTypeId])
+	REFERENCES [dbo].[ActivityType] ([Id])
+
+	ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [FK_Task_ActivityType]
+
+	ALTER TABLE [dbo].[Task]  WITH CHECK ADD  CONSTRAINT [FK_Task_Status] FOREIGN KEY([StatusId])
+	REFERENCES [dbo].[Status] ([Id])
+
+	ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [FK_Task_Status]
+
+END
+GO
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'Activity')
+BEGIN
+
+	CREATE TABLE [dbo].[Activity](
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Name] [nvarchar](50) NOT NULL,
+		[Description] [nvarchar](50) NULL,
+		[Url] [nvarchar](50) NULL,
+		[StartDate] [datetime] NULL,
+		[EndDate] [datetime] NULL,
+		[StatusId] [int] NOT NULL,
+		[ActivityTypeId] [int] NOT NULL,
+		[DoneDate] [datetime] NULL,
+	 CONSTRAINT [PK_Activity] PRIMARY KEY CLUSTERED 
+	(
+		[Id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[Activity]  WITH CHECK ADD  CONSTRAINT [FK_Activity_ActivityType] FOREIGN KEY([ActivityTypeId])
+	REFERENCES [dbo].[ActivityType] ([Id])
+
+	ALTER TABLE [dbo].[Activity] CHECK CONSTRAINT [FK_Activity_ActivityType]
+
+	ALTER TABLE [dbo].[Activity]  WITH CHECK ADD  CONSTRAINT [FK_Activity_Status] FOREIGN KEY([StatusId])
+	REFERENCES [dbo].[Status] ([Id])
+
+	ALTER TABLE [dbo].[Activity] CHECK CONSTRAINT [FK_Activity_Status]
+
+END
+GO
+
+
+
