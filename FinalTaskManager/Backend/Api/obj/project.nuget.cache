@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DYAxyix1a8z2dTIesYUduarS4ueaJ+1s2rtwy7iteQqF447FRKNUHSU7I/T8N3WarO0D3gZt9JdsokfgPn/WeA==",
+  "dgSpecHash": "JQ5s5xqJ7zQoD5FsY9NNYI5/mt0AhXZ6kvbCfYfbnWEauvueBOftGKrNquWPV/Ey5luHjwlKWQc9jKCuUosgCA==",
   "success": true,
-  "projectFilePath": "E:\\FinalTaskManager\\TaskManager3-main\\Backend\\Api\\Api.csproj",
+  "projectFilePath": "E:\\FinalTaskManager\\FinalTaskManager\\Backend\\Api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\janne\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\janne\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
